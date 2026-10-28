@@ -1,0 +1,6 @@
+/* Hide the ways into Reels and Explore. Instagram's class names are generated, so match by link target:
+   the link is the whole menu item in the sidebar and the bottom bar. */
+a[href="/reels/"],
+a[href="/explore/"] {
+  display: none !important;
+}

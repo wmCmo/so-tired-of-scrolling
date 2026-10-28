@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>I'm so tired of scrolling</title>
+<meta name="description" content="A free, open-source browser extension that stops the endless scroll on YouTube Shorts and Instagram Reels. A pause, a daily count, and one video if you really mean it.">
+<meta property="og:title" content="I'm so tired of scrolling">
+<meta property="og:description" content="Stop the endless scroll on YouTube Shorts and Instagram Reels. Free, open source, no tracking.">
+<meta property="og:image" content="https://wmcmo.github.io/so-tired-of-scrolling/img/og.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fff8ee;
+  --surface: #ffffff;
+  --ink: #1f1a17;
+  --ink-2: #5d5550;
+  --line: #efe3d3;
+  --accent: #ff4d4d;
+  --accent-ink: #ffffff;
+  --chip: #fff0dc;
+  --shadow: 0 20px 50px -24px rgba(80, 45, 10, .35);
+  --frame: #1b1c1f;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111214;
+    --surface: #1a1b1e;
+    --ink: #ecedef;
+    --ink-2: #a3a7ae;
+    --line: #2a2c30;
+    --chip: #24211d;
+    --shadow: 0 20px 50px -24px rgba(0, 0, 0, .8);
+    --frame: #2a2c30;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+a { color: inherit; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+h1, h2, h3 { font-family: "Nunito", system-ui, sans-serif; letter-spacing: -.01em; }
+
+/* hero */
+.hero { text-align: center; padding-top: 72px; padding-bottom: 40px; }
+.face { width: 132px; height: 132px; display: block; margin: 0 auto 18px; animation: roll 6s ease-in-out infinite; }
+@keyframes roll { 0%, 70%, 100% { transform: rotate(0) } 76% { transform: rotate(-8deg) } 84% { transform: rotate(6deg) } 90% { transform: rotate(0) } }
+@media (prefers-reduced-motion: reduce) { .face { animation: none; } }
+.hero h1 { font-size: clamp(40px, 7vw, 72px); font-weight: 900; line-height: 1.02; margin: 0 0 18px; }
+.lede { font-size: clamp(18px, 2.4vw, 21px); color: var(--ink-2); max-width: 620px; margin: 0 auto 30px; }
+.ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 14px;
+  font-weight: 700; text-decoration: none; border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+}
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn small { font-weight: 600; opacity: .75; }
+.btn[aria-disabled="true"] { opacity: .55; cursor: default; }
+.trust { margin-top: 18px; color: var(--ink-2); font-size: 15px; }
+.trust span { white-space: nowrap; }
+
+/* screenshot in a browser frame */
+.shot { margin: 40px auto 0; max-width: 880px; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--line); background: var(--frame); }
+.bar { display: flex; align-items: center; gap: 8px; padding: 11px 14px; }
+.bar i { width: 11px; height: 11px; border-radius: 50%; background: #ff5f57; }
+.bar i:nth-child(2) { background: #febc2e; } .bar i:nth-child(3) { background: #28c840; }
+.bar span { margin-left: 10px; flex: 1; background: rgba(255,255,255,.08); color: #b9bcc2; border-radius: 8px; padding: 4px 12px; font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.shot img { display: block; width: 100%; height: auto; }
+
+/* sections */
+section { padding: 64px 0 0; }
+.kicker { text-transform: uppercase; letter-spacing: .12em; font-size: 13px; font-weight: 700; color: var(--accent); margin: 0 0 6px; }
+h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 900; margin: 0 0 24px; line-height: 1.1; }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; counter-reset: s; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 22px 22px 18px; }
+.steps .card::before { counter-increment: s; content: counter(s); display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--chip); color: var(--accent); font: 900 17px "Nunito", sans-serif; margin-bottom: 10px; }
+.card h3 { margin: 0 0 6px; font-size: 20px; font-weight: 800; }
+.card p { margin: 0; color: var(--ink-2); }
+
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.list { margin: 0; padding: 0; list-style: none; }
+.list li { padding: 9px 0 9px 30px; position: relative; border-top: 1px solid var(--line); }
+.list li:first-child { border-top: 0; }
+.list li::before { position: absolute; left: 0; top: 9px; font-size: 18px; line-height: 1.5; }
+.stop li::before { content: "✋"; }
+.keep li::before { content: "✅"; }
+
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 4px 20px; margin-bottom: 10px; }
+summary { cursor: pointer; font-weight: 700; padding: 14px 0; list-style: none; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; float: right; color: var(--ink-2); font-weight: 400; }
+details[open] summary::after { content: "−"; }
+details p { margin: 0 0 16px; color: var(--ink-2); }
+code { background: var(--chip); padding: 1px 6px; border-radius: 6px; font-size: .92em; }
+
+footer { margin: 72px 0 0; padding: 28px 0 40px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 14.5px; }
+footer .wrap { display: flex; gap: 10px 24px; flex-wrap: wrap; justify-content: space-between; }
+@media (max-width: 560px) {
+  .hero { padding-top: 48px; }
+  .shot { margin-left: -4px; margin-right: -4px; }
+  .btn { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <img class="face" src="img/face.svg" alt="">
+  <h1>I'm so tired<br>of scrolling.</h1>
+  <p class="lede">A tiny browser extension that catches you right before the endless scroll on
+    <b>YouTube Shorts</b> and <b>Instagram Reels</b> starts. Not a prison, just a pause.</p>
+  <div class="ctas">
+    <a class="btn primary" id="edge" href="#install" aria-disabled="true">Get it for Edge <small>· coming soon</small></a>
+    <a class="btn" id="chrome" href="#install" aria-disabled="true">Get it for Chrome <small>· coming soon</small></a>
+    <a class="btn" href="https://github.com/wmCmo/so-tired-of-scrolling">View on GitHub</a>
+  </div>
+  <p class="trust"><span>Free</span> · <span>Open source</span> · <span>No tracking</span> · <span>No account</span></p>
+
+  <div class="shot">
+    <div class="bar"><i></i><i></i><i></i><span>youtube.com/shorts/… → Not today.</span></div>
+    <img src="img/stop-page.png" width="1280" height="800" alt="The stop page: a rolling-eyes face, 'Not today.', today's try count, a Close this tab button and a 'Watch just this one' button counting down">
+  </div>
+</header>
+
+<main class="wrap">
+  <section>
+    <p class="kicker">How it works</p>
+    <h2>You reach for a Short. It reaches back.</h2>
+    <div class="steps">
+      <div class="card"><h3>You tap a Short or a Reel</h3><p>Out of habit, from the home page, a search, a link a friend sent. It doesn't matter how you got there.</p></div>
+      <div class="card"><h3>"Not today."</h3><p>Instead of the feed you get a calm stop page, how many times you've tried today, and one question: what were you about to do?</p></div>
+      <div class="card"><h3>Still want it? Fine.</h3><p>Wait 10 seconds and watch <b>just that one</b>, in the normal player. No swipe, no "next", no feed after it.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="kicker">What it touches</p>
+    <h2>Only the scroll. Nothing else.</h2>
+    <div class="cols">
+      <div class="card">
+        <h3>Stops</h3>
+        <ul class="list stop">
+          <li>YouTube Shorts, and the Shorts shelves, sidebar tab and search results</li>
+          <li>Instagram Reels, the feed and single reels</li>
+          <li>Instagram Explore, plus the Reels and Explore buttons</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Leaves alone</h3>
+        <ul class="list keep">
+          <li>Normal YouTube videos, subscriptions and playlists</li>
+          <li>Your Instagram feed, posts, profiles and DMs</li>
+          <li>Every other website</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <p class="kicker">Install</p>
+    <h2>Get it running in a minute.</h2>
+    <div class="card">
+      <p style="margin-bottom:12px">The Edge Add-ons and Chrome Web Store listings are on their way. Until then you can install it straight from GitHub:</p>
+      <ol style="margin:0;padding-left:22px;color:var(--ink-2)">
+        <li>Download the latest <code>so-tired-of-scrolling-*.zip</code> from <a href="https://github.com/wmCmo/so-tired-of-scrolling/releases/latest">Releases</a> and unzip it.</li>
+        <li>Open <code>edge://extensions</code> or <code>chrome://extensions</code> and turn on <b>Developer mode</b>.</li>
+        <li>Click <b>Load unpacked</b> and pick the unzipped folder.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <p class="kicker">Questions</p>
+    <h2>Fair questions.</h2>
+    <details><summary>Why not just block it completely?</summary>
+      <p>Because a wall you resent gets uninstalled. The urge to open Shorts lasts a few seconds; a pause and a counter are usually enough to break it, and when you genuinely want one video, you can still watch it, without the feed that follows.</p></details>
+    <details><summary>What data does it collect?</summary>
+      <p>None. It keeps two numbers in your browser, today's date and today's try count, and makes no network requests of its own. Read the <a href="privacy.html">privacy policy</a> or the code.</p></details>
+    <details><summary>Does it work on my phone?</summary>
+      <p>Only in a desktop browser for now. The YouTube and Instagram apps aren't browsers, so no extension can reach them. On Android, <b>Digital Wellbeing → App timers</b> is the closest thing.</p></details>
+    <details><summary>YouTube changed something and Shorts are back.</summary>
+      <p>YouTube and Instagram change their pages often. <a href="https://github.com/wmCmo/so-tired-of-scrolling/issues">Open an issue</a> with a screenshot and it'll get fixed.</p></details>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Made by <a href="https://github.com/wmCmo">wmCmo</a>, who was also very tired of scrolling. MIT licensed.</span>
+    <span>Emoji: <a href="https://github.com/microsoft/fluentui-emoji">Fluent Emoji</a> by Microsoft (MIT) · <a href="privacy.html">Privacy</a></span>
+  </div>
+</footer>
+
+<script>
+  // Store links: fill these in once the listings are live, and the buttons switch on by themselves.
+  const STORES = { edge: '', chrome: '' }
+  for (const [id, url] of Object.entries(STORES)) {
+    const a = document.getElementById(id)
+    if (url) { a.href = url; a.removeAttribute('aria-disabled'); a.querySelector('small')?.remove() }
+  }
+</script>
+</body>
+</html>

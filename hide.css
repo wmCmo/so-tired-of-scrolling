@@ -1,0 +1,30 @@
+/* Hide the ways into Shorts. YouTube's markup changes often, so match by element name, attribute and link target. */
+
+/* Shorts shelves on home, search and channel pages */
+ytd-reel-shelf-renderer,
+ytd-rich-shelf-renderer[is-shorts],
+ytd-rich-section-renderer:has(ytd-rich-shelf-renderer[is-shorts]),
+ytd-rich-section-renderer:has(a[href^="/shorts/"]),
+ytm-shorts-lockup-view-model,
+ytm-shorts-lockup-view-model-v2,
+grid-shelf-view-model:has(a[href^="/shorts/"]),
+ytd-reel-item-renderer,
+
+/* Single Shorts mixed into search results and recommendations */
+ytd-video-renderer:has(a[href^="/shorts/"]),
+ytd-rich-item-renderer:has(a[href^="/shorts/"]),
+ytd-compact-video-renderer:has(a[href^="/shorts/"]),
+
+/* "Shorts" entry in the sidebar and mini sidebar (ショート is the Japanese UI label) */
+ytd-guide-entry-renderer:has(a[href="/shorts"]),
+ytd-guide-entry-renderer:has(a[title="Shorts"]),
+ytd-guide-entry-renderer:has(a[title="ショート"]),
+ytd-mini-guide-entry-renderer:has(a[href="/shorts"]),
+ytd-mini-guide-entry-renderer[aria-label="Shorts"],
+ytd-mini-guide-entry-renderer[aria-label="ショート"],
+
+/* "Shorts" tab on channel pages */
+yt-tab-shape[tab-title="Shorts"],
+yt-tab-shape[tab-title="ショート"] {
+  display: none !important;
+}

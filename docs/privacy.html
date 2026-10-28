@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy · I'm so tired of scrolling</title>
+<link rel="icon" href="img/favicon-32.png">
+<style>
+:root { --bg: #fff8ee; --ink: #1f1a17; --ink-2: #5d5550; --line: #efe3d3; --chip: #fff0dc; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #111214; --ink: #ecedef; --ink-2: #a3a7ae; --line: #2a2c30; --chip: #24211d; }
+}
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 680px; margin: 0 auto; padding: 56px 20px 72px; }
+a { color: inherit; }
+h1 { font-size: 34px; margin: 0 0 6px; }
+.big { font-size: 21px; margin: 0 0 28px; }
+li { margin-bottom: 10px; color: var(--ink-2); }
+code { background: var(--chip); padding: 1px 6px; border-radius: 6px; }
+.back { display: inline-block; margin-bottom: 28px; color: var(--ink-2); text-decoration: none; }
+footer { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 14.5px; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="./">← I'm so tired of scrolling</a>
+  <h1>Privacy policy</h1>
+  <p class="big"><b>I'm so tired of scrolling</b> collects nothing.</p>
+  <ul>
+    <li>It stores exactly two values, in your browser only (<code>chrome.storage.local</code>): today's date and how many
+      times you've hit the stop page today. They never leave your device, and the count resets each day.</li>
+    <li>It makes no network requests of its own: no analytics, no tracking, no accounts, no ads.</li>
+    <li>It only runs on youtube.com and instagram.com, to recognise Shorts, Reels and Explore pages and hide the links to
+      them. It doesn't read or store what you watch, search or post.</li>
+    <li>Uninstalling the extension deletes the stored count.</li>
+  </ul>
+  <p>The code is open source, so you can check all of the above:
+    <a href="https://github.com/wmCmo/so-tired-of-scrolling">github.com/wmCmo/so-tired-of-scrolling</a>.
+    Questions: <a href="https://github.com/wmCmo/so-tired-of-scrolling/issues">open an issue</a>.</p>
+  <footer>Last updated 2026-10-28.</footer>
+</main>
+</body>
+</html>
